@@ -94,3 +94,21 @@ target_link_libraries("${CMAKE_PROJECT_NAME}"
 	ImGui-SFML::ImGui-SFML
 	glad
 )
+# --- Automated DLL Copying ---
+
+if(WIN32)
+    # 1. Locate the OpenAL DLL inside your SFML thirdparty directory
+    # SFML usually stores its dependencies in a 'extlibs' folder
+    set(OPENAL_DLL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML-2.6.1/extlibs/bin/x64/openal32.dll")
+
+    # If your SFML structure is different, you might need to adjust the path above.
+    # Common alternative path: "${SFML_DIR}/bin/openal32.dll"
+
+    # 2. Add a command to copy the DLL to the folder where the .exe is built
+    add_custom_command(TARGET "${CMAKE_PROJECT_NAME}" POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${OPENAL_DLL_PATH}"
+        $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
+        COMMENT "Copying OpenAL32.dll to build directory..."
+    )
+endif()

@@ -117,7 +117,7 @@ static_assert(sizeof(GLuint) <= sizeof(ImTextureID),
               "ImTextureID is not large enough to fit GLuint.");
 
 namespace {
-// various helper functions
+// helper functions
 ImColor toImColor(sf::Color c);
 ImVec2 getTopLeftAbsolute(const sf::FloatRect& rect);
 ImVec2 getDownRightAbsolute(const sf::FloatRect& rect);
